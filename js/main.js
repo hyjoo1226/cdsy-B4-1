@@ -85,7 +85,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
     darkModeToggle.addEventListener('click', toggleTheme);
     loadTheme();
-    
+
 
     // f. 스크롤 애니메이션
+
+
+    // 폼 UX
+    const contactForm = document.getElementById('contact-form');
+    const nameInput = document.getElementById('user-name');
+    const emailInput = document.getElementById('user-email');
+    const messageInput = document.getElementById('user-message');
+
+    const nameError = document.getElementById('name-error');
+    const emailError = document.getElementById('email-error');
+    const messageError = document.getElementById('message-error');
+    const successMessage = document.getElementById('success-message');
+
+    // 에러 메시지 표시
+    function showError(input, error, message) {
+        input.classList.add('error');
+        error.textContent = message;
+    }
+
+    // 에러 메시지 제거
+    function clearError(input, error) {
+        input.classList.remove('error');
+        error.textContent = '';
+    }
+
+    // 입력 시 에러 메시지 제거
+    nameInput.addEventListener('input', () => clearError(nameInput, nameError));
+    emailInput.addEventListener('input', () => clearError(emailInput, emailError));
+    messageInput.addEventListener('input', () => clearError(messageInput, messageError));
+
+    // 유효성 검사
+    function validateName() {
+        if (nameInput.value.trim() === '') {
+            showError(nameInput, nameError, '이름을 입력해주세요.');
+            return false;
+        }
+        clearError(nameInput, nameError);
+        return true;
+    }
+
+    function validateEmail() {
+        const email = emailInput.value.trim();
+        if (email === '') {
+            showError(emailInput, emailError, '이메일을 입력해주세요.');
+            return false;
+        }
+        if (!email.includes('@') || !email.includes('.')) {
+            showError(emailInput, emailError, '이메일 형식이 올바르지 않습니다.');
+            return false;
+        }
+        clearError(emailInput, emailError);
+        return true;
+    }
+
+    function validateMessage() {
+        if (messageInput.value.trim() === '') {
+            showError(messageInput, messageError, '메시지를 입력해주세요.');
+            return false;
+        }
+        clearError(messageInput, messageError);
+        return true;
+    }
+
+    // 폼 제출
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        const isMessageValid = validateMessage();
+
+        if (isNameValid && isEmailValid && isMessageValid) {
+            successMessage.textContent = '문의가 성공적으로 접수되었습니다!';
+            contactForm.reset();
+        } else {
+            successMessage.textContent = '';
+        }
+    });
 });

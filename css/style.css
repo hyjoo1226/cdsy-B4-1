@@ -473,6 +473,26 @@ header button {
     display: block;
 }
 
+input.error, textarea.error {
+    border-color: red;
+}
+
+.error-message {
+    margin-top: 1rem;
+    min-height: 16px;
+    font-size: 0.8rem;
+    color: red;
+}
+
+.success-message {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: #c6f6d5;
+    color: #276749;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
 /* ========== Footer ========== */
 footer {
     background-color: #1d1d1f;
