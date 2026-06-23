@@ -167,3 +167,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+// Github API 연동
+const GITHUB_USERNAME = 'hyjoo1226';
+const GITHUB_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos`;
+const projectsContainer = document.getElementById('projects-container');
+
+async function fetchGitHubProjects() {
+        try {
+            // API 호출
+            const response = await fetch(GITHUB_API_URL);
+
+            // 에러 처리
+            if (!response.ok) {
+                if (response.status === 403) {
+                    throw new Error('프로젝트를 불러올 수 없습니다. API 호출 횟수 초과(Rate Limit)');
+                }
+                throw new Error('프로젝트를 불러올 수 없습니다.');
+            }
+
+            const repos = await response.json();
+
+            // 빈 데이터 처리
+            if (repos.length === 0) {
+                projectsContainer.innerHTML = '<p class="empty-text">표시할 프로젝트가 없습니다.</p>';
+                return;
+            }
+
+            // 각 프로젝트 정보를 담은 카드 생성
+            const projectCardsHTML = repos.map(repo => {
+                const { name, html_url, description, stargazers_count, forks_count, language } = repo;
+
+                return `
+                    <article class="project-card">
+                        <h3 class="repo-name">
+                            <a href="${html_url}" target="_blank" rel="noopener noreferrer">${name}</a>
+                        </h3>
+                        <p class="repo-desc">${description || '설명이 없습니다.'}</p>
+                        <div class="repo-meta">
+                            <span>⭐ ${stargazers_count}</span>
+                            <span>🍴 ${forks_count}</span>
+                            ${language ? `<span class="repo-lang">💻 ${language}</span>` : ''}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            // 프로젝트 카드들을 컨테이너에 추가
+            projectsContainer.innerHTML = `
+                <div class="projects-grid">
+                    ${projectCardsHTML}
+                </div>
+            `;
+
+        } catch (error) {
+            // 에러 발생 시 UI 업데이트
+            projectsContainer.innerHTML = `
+                <div class="error-state">
+                    <p>🚨 ${error.message}</p>
+                    <button class="btn-primary btn-reload">새로고침</button>
+                </div>
+            `;
+        }
+    }
+
+// 새로고침 버튼
+projectsContainer.addEventListener('click', (event) => {
+    if (event.target.classList.contains('btn-reload')) {
+        location.reload();
+    }
+});
+
+fetchGitHubProjects();

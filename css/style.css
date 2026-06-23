@@ -378,6 +378,10 @@ header button {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
+[data-theme="dark"] .project-card {
+    border-color: #444;
+}
+
 .project-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
@@ -394,6 +398,33 @@ header button {
     margin-bottom: 1.5rem;
     font-size: 0.95rem;
     line-height: 1.5;
+}
+
+.repo-name {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.repo-name a {
+    color: var(--primary-color);
+}
+
+.repo-desc {
+    flex-grow: 1;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+[data-theme="dark"] .repo-desc {
+    color: #aaa;
+}
+
+.repo-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.85rem;
+    font-weight: bold;
 }
 
 /* ========== Section - Contact ========== */
