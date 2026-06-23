@@ -19,8 +19,17 @@ a {
 
 /* ========== 공통 스타일(CSS 변수) ========== */
 :root {
-    --header-height: 4rem;
-    --section-padding: 2rem 1rem;
+    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;  /* 대체 폰트 */
+    
+    --spacing-sm: 0.5rem;   /* 8px */
+    --spacing-md: 1rem;     /* 16px */
+    --spacing-md-lg: 1.5rem;  /* 24px */
+    --spacing-lg: 2rem;     /* 32px */
+    --spacing-lg-xl: 2.5rem;  /* 40px */
+    --spacing-xl: 4rem;     /* 64px */
+
+    --header-height: var(--spacing-xl);
+    --section-padding: var(--spacing-lg) var(--spacing-md);
 
     /* 라이트 모드 */
     --primary-color: #fe365e;
@@ -50,8 +59,7 @@ html {
 }
 
 body {
-    /* 대체 폰트 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-main);
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -69,30 +77,54 @@ section {
     padding: var(--section-padding);
     max-width: 1000px;
     margin: 0 auto;
+
+    /* 스크롤 애니메이션 */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @media (min-width: 768px) {
     section {
-        padding: 4rem 2rem;
+        padding: var(--spacing-lg-xl) var(--spacing-md);
+    }
+}
+
+@media (min-width: 1024px) {
+    section {
+        max-width: 1200px;
+        padding: var(--spacing-xl) var(--spacing-md);
     }
 }
 
 section h2 {
     font-size: 2.2rem;
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-md);
     text-align: center;
 }
 
 @media (min-width: 768px) {
     section h2 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    section h2 {
         font-size: 2.5rem;
+        margin-bottom: var(--spacing-lg);
     }
 }
 
 .btn-primary {
     display: inline-block;
-    margin-top: 1.5rem;
-    padding: 0.8rem 1.5rem;
+    margin-top: var(--spacing-md-lg);
+    padding: var(--spacing-md) var(--spacing-md-lg);
     background-color: var(--primary-color);
     color: #ffffff;
     border-radius: 6px;
@@ -108,24 +140,12 @@ section h2 {
 .section-description {
     text-align: center;
     color: var(--text-muted);
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-md);
 }
 
 .loading-text {
     text-align: center;
     width: 100%;
-}
-
-/* 스크롤 애니메이션 */
-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-section.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* ==========  Header, Nav ========== */
@@ -152,7 +172,7 @@ header.scrolled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1.5rem;
+    padding: 0 var(--spacing-md-lg);
 }
 
 .logo {
@@ -164,7 +184,7 @@ header.scrolled {
 .header-controls {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--spacing-md-lg);
 }
 
 header button {
@@ -195,8 +215,8 @@ header button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 3rem;
-    gap: 2.5rem;
+    padding-top: var(--spacing-xl);
+    gap: var(--spacing-lg);
     transition: right 0.4s ease, background-color 0.3s ease;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -225,7 +245,7 @@ header button {
         height: auto;
         background-color: transparent;
         padding-top: 0;
-        gap: 2rem;
+        gap: var(--spacing-lg);
         box-shadow: none;
     }
     
@@ -246,7 +266,7 @@ header button {
 
 #hero h1 {
     font-size: 2.2rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     line-height: 1.4;
 }
 
@@ -262,15 +282,15 @@ header button {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
 }
 
 @media (min-width: 768px) {
     .about-profile {
         flex-direction: row;
         text-align: left;
-        gap: 3rem;
+        gap: var(--spacing-lg);
     }
 }
 
@@ -287,39 +307,45 @@ header button {
     font-size: 1.05rem;
     line-height: 1.7;
     color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-md);
 }
 
 .about-history {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: var(--spacing-lg);
 }
 
 .history-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    padding: 1.8rem;
+    padding: var(--spacing-lg);
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
 }
 
+@media (min-width: 1024px) {
+    .history-card {
+        padding: var(--spacing-xl);
+    }
+}
+
 .history-card h3 {
     color: var(--header-bg);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     font-size: 1.3rem;
 }
 
 .history-card ul {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: var(--spacing-md);
 }
 
 .history-card li {
     color: var(--text-color);
     position: relative;
-    padding-left: 1.2rem;
+    padding-left: var(--spacing-lg);
 }
 
 .history-card li::before {
@@ -334,28 +360,40 @@ header button {
 /* ========== Section - Skills ========== */
 .skills-wrapper {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 2.5rem;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+    .skills-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .skills-wrapper {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 #skills article h3 {
     font-size: 1.2rem;
     color: var(--primary-color);
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
     border-bottom: 2px solid var(--border-color);
 }
 
 #skills ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
+    gap: var(--spacing-md);
 }
 
 #skills li {
     background-color: var(--badge-bg);
     color: var(--text-color);
-    padding: 0.5rem 1rem;
+    padding: var(--spacing-sm) var(--spacing-md-lg);
     border-radius: 20px;
     border: 1px solid var(--border-color);
     font-size: 0.95rem;
@@ -376,14 +414,20 @@ header button {
 #projects-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: var(--spacing-lg);
+}
+
+@media (min-width: 1024px) {
+    #projects-container {
+        gap: var(--spacing-xl);
+    }
 }
 
 .project-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -401,19 +445,25 @@ header button {
 
 .project-card h3 {
     color: var(--text-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-md);
     font-size: 1.3rem;
+}
+
+@media (min-width: 1024px) {
+    .project-card h3 {
+        font-size: 1.5rem;
+    }
 }
 
 .project-card p {
     color: var(--text-muted);
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
     font-size: 0.95rem;
     line-height: 1.5;
 }
 
 .repo-name {
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-md);
     font-size: 1.2rem;
 }
 
@@ -424,7 +474,7 @@ header button {
 .repo-desc {
     flex-grow: 1;
     font-size: 0.95rem;
-    margin-bottom: 15px;
+    margin-bottom: var(--spacing-md);
     color: #666;
 }
 
@@ -434,7 +484,7 @@ header button {
 
 .repo-meta {
     display: flex;
-    gap: 15px;
+    gap: var(--spacing-md);
     font-size: 0.85rem;
     font-weight: bold;
 }
@@ -445,13 +495,13 @@ header button {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: var(--spacing-lg);
 }
 
 #contact-form div {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: var(--spacing-md);
 }
 
 #contact-form label {
@@ -468,7 +518,7 @@ header button {
     color: var(--text-color);
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    padding: 0.8rem;
+    padding: var(--spacing-sm);
     width: 100%;
     transition: border-color 0.3s ease;
 }
@@ -485,10 +535,10 @@ header button {
     font-size: 1rem;
     font-weight: 600;
     border: none;
-    padding: 0.9rem;
+    padding: var(--spacing-sm);
     border-radius: 6px;
     cursor: pointer;
-    margin-top: 0.5rem;
+    margin-top: var(--spacing-md);
     transition: background-color 0.3s ease;
 }
 
@@ -500,7 +550,7 @@ header button {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    padding: 10px 15px;
+    padding: var(--spacing-sm) var(--spacing-md-lg);
     background-color: var(--primary-color);
     color: #ffffff;
     border: none;
@@ -521,15 +571,15 @@ input.error, textarea.error {
 }
 
 .error-message {
-    margin-top: 1rem;
+    margin-top: var(--spacing-md);
     min-height: 16px;
     font-size: 0.8rem;
     color: red;
 }
 
 .success-message {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md-lg);
     background-color: #c6f6d5;
     color: #276749;
     border-radius: 6px;
@@ -544,8 +594,8 @@ input.error, textarea.error {
 footer {
     background-color: #1d1d1f;
     color: #8e8e93;
-    padding: 2.5rem 1rem;
-    margin-top: 5rem;
+    padding: var(--spacing-xl) var(--spacing-md-lg);
+    margin-top: var(--spacing-xl);
     text-align: center;
     font-size: 0.95rem;
 }
@@ -553,7 +603,7 @@ footer {
 .footer-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--spacing-lg);
     align-items: center;
     max-width: 1000px;
     margin: 0 auto;
@@ -562,7 +612,7 @@ footer {
 .footer-links {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: var(--spacing-md);
 }
 
 .footer-links a {
@@ -582,6 +632,6 @@ footer {
     
     .footer-links {
         flex-direction: row;
-        gap: 1.5rem;
+        gap: var(--spacing-lg);
     }
 }
