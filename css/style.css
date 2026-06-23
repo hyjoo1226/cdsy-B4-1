@@ -116,6 +116,18 @@ section h2 {
     width: 100%;
 }
 
+/* 스크롤 애니메이션 */
+section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* ==========  Header, Nav ========== */
 header {
     position: fixed;
@@ -177,7 +189,7 @@ header button {
     position: fixed;
     top: var(--header-height);
     right: -100%;
-    width: 60%;
+    width: 40%;
     height: calc(100vh - var(--header-height));
     background-color: var(--header-bg);
     display: flex;
@@ -522,6 +534,10 @@ input.error, textarea.error {
     color: #276749;
     border-radius: 6px;
     font-size: 0.95rem;
+}
+
+.success-message:empty {
+    display: none;
 }
 
 /* ========== Footer ========== */

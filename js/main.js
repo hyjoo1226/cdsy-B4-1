@@ -88,6 +88,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // f. 스크롤 애니메이션
+    const observerOptions = {
+        root: null,         // 뷰포트 전체를 기준
+        rootMargin: '0px',
+        threshold: 0.2      // 요소가 화면에 20% 보일 때 작동
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            // 화면에 요소가 들어왔으면 'visible' 클래스 추가
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    // 애니메이션을 적용할 모든 섹션 요소를 찾아서 관찰
+    const hiddenElements = document.querySelectorAll('section');
+    hiddenElements.forEach((el) => observer.observe(el));
 
 
     // 폼 UX
@@ -162,6 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isNameValid && isEmailValid && isMessageValid) {
             successMessage.textContent = '문의가 성공적으로 접수되었습니다!';
             contactForm.reset();
+
+            setTimeout(() => {
+                successMessage.textContent = '';
+            }, 3000);
         } else {
             successMessage.textContent = '';
         }
